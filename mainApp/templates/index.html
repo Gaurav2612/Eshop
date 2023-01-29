@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+    {% block title %}
+    <title>Document</title>
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg background fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="{% static '/images/shop1.png'%}" class="d-block" height = "50px" alt="..."></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/shop/All/All/All/">Shop</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/contact">ContactUs</a>
+              </li>              
+            </ul>
+            <form class="d-flex w-100" action="/shop/All/All/All/" method="post">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success text-light text-light" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active text-light"  href="/cart">Cart</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{request.user}}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                  </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a class = "nav-link text-light" href="/login">Login</a>
+                </li>
+                {% endif %}
+              </ul>
+          </div>
+        </div>
+      </nav>
+      {% block body %}<br><br><br>
+      <div id="carouselExampleIndicators" class="carousel slide mt-2">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static '/images/shoes1.jpg' %} " class="d-block" height="500px" width = "1550px" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static '/images/shoes2.jpg' %} " class="d-block" height="500px" width = "1550px" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static '/images/shoes3.jpg' %} " class="d-block" height="500px" width = "1550px" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <h5 class="background text-light text-center p-2 mt-1">Product Section</h5>
+      <div class="container-fluid mt-2">
+        <div class="row">
+            {% for i in Products %}
+                <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                        {% if i.pic1 %}
+                        <img src={{i.pic1.url}} class="card-img-top" height="250px" alt="...">
+                        {% else %}
+                        <img src="../static/images/noimage.jpg" class="card-img-top" height="250px" alt="...">
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="card-title" style="height:70px">{{i.name}}</h5>
+                          <p class="card-text" style="height:30px">Price <strike>&#8377;{{i.basePrice}}</strike>&#8377;{{i.finalPrice}}</p>
+                          <p class="card-text">Discount {{i.discount}}%</p>
+                          <a href = "/singleProduct/{{i.id}}/" class="btn btn-primary text-light w-100">Add to Cart</a>
+                            
+                          
+                        </div>
+                      </div>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+      {% endblock %}
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <footer class="background text-light text-center p-3 m-1">
+        <p>copyright@eshop.com</p>
+        <div class="row">
+          <div class="col-md-3 col-sm-12 col-12"></div>
+          <div class="col-md-6 col-sm-12 col-12">
+              <form action="/newslatter/" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                  
+                  <input type="email" class="form-control" name="email" placeholder="Enter Your Email Id to Subscribe our Newslatter Service">
+                  <div id ="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div>
+                </div>
+                
+                <button type="submit" class="btn btn-light w-100">Subscribe</button>
+              </form>
+          </div>
+          <div class="col-md-3 col-sm-12 col-12"></div>
+          
+        </div>
+    </footer>
+</body>
+</html>

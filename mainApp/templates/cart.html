@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load cart %}
+{% block title %}
+<title>Eshop | Cart Page</title>
+{% endblock %}
+
+{% block body %}<br><br><br>
+
+<h5 class="background text-light text-center p-2 mt-2">Cart Section</h5>  
+<div class="table-responsive">
+    <table class="table table-hover table-light">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th></th>
+            <th>Qty</th>
+            <th></th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        {% for i in Products %}
+            <tr>
+                {% if i.pic1 %}
+                <td><img class= "rounded-1" src={{i.pic1.url}} height ="100px" width="100px"> </td>
+                {% else %}
+                <td><img srtc="{% static 'images/noimage.jpg' %}" height="100px" width="100px"></td>
+                {% endif %}
+                <td>{{i.name}}</td>
+                <td>{{i.color}}</td>
+                <td>{{i.size}}</td>
+                <td>&#8377;{{i.finalPrice}}</td>
+                <td><a href="/update-cart/{{i.id}}/1"><i class="material-icons">remove</i></a></td>
+                <td>{{request|cartQty:i.id}}</td>
+                <td><a href="/update-cart/{{i.id}}/2"><i class="material-icons">add</i></a></td>
+                <td>&#8377;{{request|cartTotal:i.id}}</td> 
+                <td><a href="/remove-from-cart/{{i.id}}/"><i class="material-icons">delete_forever</i></a></td>
+
+
+                
+            </tr>    
+        {% endfor %}
+
+            
+            
+
+            
+        </tr>
+    </table>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-12"></div>
+    <div class="col-md-6 col-sm-12 col-12">
+        <table class= "table table-hover tabl-light table-striped">
+            <tr>
+                <th>Total</th>
+                <td>&#8377;{{Total}}</td>
+            </tr>
+            <tr>
+                <th>Shipping</th>
+                <td>&#8377;{{Shipping}}</td>
+            </tr>
+            <tr>
+                <th>Final</th>
+                <td>&#8377;{{Final}}</td>
+            </tr>
+            <tr>
+                {% if request|showCheckButton:Final %}
+                <th colspan="2"><a href="/checkout/" class="btn btn-primary text-light w-100">Checkout</a></th>
+                {% else %}
+                <th colspan="2"><a href="/shop/All/All/All/" class="btn btn-primary text-light w-100">No Items in Cart!! Shop now</a></th>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

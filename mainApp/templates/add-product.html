@@ -1,0 +1,132 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}
+<title>Eshop | SignUp</title>
+{% endblock %}
+
+{% block body %}<br><br><br>
+
+
+<h5 class="background text-light p-2 text-center  mt-2">Add New Product Section</h5>
+<div class="container">
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Enter Seller Name">
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="maincategory" class="form-label">Main-Category</label>
+                <select name="maincategory" class="form-control">
+                    {% for i in MainCat %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="subcategory" class="form-label">Sub-Category</label>
+                <select name="subcategory" class="form-control">
+                    {% for i in SubCat %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <select name="brand" class="form-control">
+                    {% for i in Brand %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="stock" class="form-label">Stock</label>
+                <select name="stock" class="form-control">
+                    <option value="In Stock">In Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="baseprice" class="form-label">Base Price</label>
+                <input type="number" class="form-control" name="baseprice" placeholder="Enter Base Price">
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="discount" class="form-label">Discount</label>
+                <input type="number" class="form-control" name="discount" placeholder="Enter Discount">
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="color" class="form-label">Color</label>
+                <input type="text" class="form-control" name="color" placeholder="Enter Color ">
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="size" class="form-label">Size</label>
+                <input type="text" class="form-control" name="size" placeholder="Enter Size ">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="pic1" class="form-label">Pic1</label>
+                <input type="file" class="form-control" name="pic1">
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="pic2" class="form-label">Pic2</label>
+                <input type="file" class="form-control" name="pic2">
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="pic3" class="form-label">Pic3</label>
+                <input type="file" class="form-control" name="pic3">
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="mb-3">
+                <label for="pic4" class="form-label">Pic4</label>
+                <input type="file" class="form-control" name="pic4">
+            </div>
+        </div>
+
+        
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label ">Description</label>
+        <textarea class="form-control" name="description" row="5"></textarea> 
+    </div>
+    
+    <button type="submit" class="btn btn-primary text-light w-100">Add</button>
+    
+</form>
+</div>
+
+{% endblock %}
